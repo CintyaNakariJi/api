@@ -15,7 +15,7 @@ client = InfluxDBClient(url=url, token=token, org=org)
 
 @app.get("/api/datos")
 def leer_datos():
-    query = f'from(bucket:"{bucket}") |> range(start: -7d)'
+    query = f'from(bucket:"{bucket}") |> range(start: -30d)'
     result = client.query_api().query(org=org, query=query)
 
     datos = []
