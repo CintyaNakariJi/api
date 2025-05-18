@@ -2,14 +2,15 @@
 from fastapi import FastAPI
 from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import SYNCHRONOUS
+import os
 
 app = FastAPI()
 
 # Configura tu conexión
-token = "domhk2ocatn5DOrGdYgw_BBm3CZlaFtkxE_4HzGaRy7EvoG9Df3x6f7EvZ3ZXiebKwL0oec2Uh6WYCjvtmpREQ=="
-org = "Trabajos"
-bucket = "maiz"
-url = "http://localhost:8086"
+url = os.getenv("https://us-east-1-1.aws.cloud2.influxdata.com")
+token = os.getenv("7QJseS0ubDwewDVp7F4j2CwJLI8Gncesop0J6lyQnH-EiUv8BgeHSHtjqb_4td5l4LKAPqLLVxygFOWYe-svWQ==")
+org = os.getenv("Trabajos")
+bucket = os.getenv("Monitoreo_de_cultivos_maiz")
 
 client = InfluxDBClient(url=url, token=token, org=org)
 
