@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from influxdb_client import InfluxDBClient
 import os
 
 app = FastAPI()
+
+# ✅ Agrega configuración de CORS (esto permite que tu HTML pueda hacer fetch sin error)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Puedes restringir a un dominio específico si deseas más seguridad
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Configura tu conexión con variables de entorno
 url = os.getenv("INFLUX_URL")
