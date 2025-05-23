@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from influxdb_client import InfluxDBClient
 import os
+from collections import defaultdict
 
 app = FastAPI()
 
@@ -28,14 +29,13 @@ def leer_datos():
     query = f'from(bucket:"{bucket}") |> range(start: -30d)'
     result = client.query_api().query(org=org, query=query)
 
-    datos = []
+    datos_dict = defaultdict(dict)
 
     for table in result:
         for record in table.records:
-            datos.append({
-                "medicion": record.get_measurement(),
-                "valor": record.get_value(),
-                "time": record.get_time().isoformat()
-            })
+            time_str = record.get_time().isoformat()
+            datos_dict[time_str]["time"] = time_str
+            datos_dict[time_str][record.get_measurement()] = record.get_value()
 
+    datos = list(datos_dict.values())
     return datos
