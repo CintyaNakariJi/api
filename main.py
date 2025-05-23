@@ -40,6 +40,9 @@ def leer_datos():
                 valor = round(valor, 2)
             datos_dict[time_str][record.get_measurement()] = valor
 
-    datos = list(datos_dict.values())
-    return datos
+    datos = []
+    for i, data in enumerate(sorted(datos_dict.values(), key=lambda x: x["time"])):
+        data["id"] = i + 1
+        datos.append(data)
 
+    return datos
