@@ -31,7 +31,6 @@ def leer_datos():
 
     datos_dict = defaultdict(dict)
 
-   for table in result:
     for record in table.records:
         time_obj = record.get_time().replace(microsecond=0)
         time_str = time_obj.isoformat()
