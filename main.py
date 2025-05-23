@@ -47,7 +47,9 @@ def leer_datos():
 
     datos = []
     for i, data in enumerate(sorted(datos_dict.values(), key=lambda x: x["time"])):
-        data["id"] = i + 1
-        datos.append(data)
+        # Crear nuevo diccionario con ID primero
+        ordenado = {"id": i + 1}
+        ordenado.update(data)
+        datos.append(ordenado)
 
     return datos
