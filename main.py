@@ -31,14 +31,15 @@ def leer_datos():
 
     datos_dict = defaultdict(dict)
 
-    for table in result:
-        for record in table.records:
-            time_str = record.get_time().isoformat()
-            datos_dict[time_str]["time"] = time_str
-            valor = record.get_value()
-            if isinstance(valor, (int, float)):
-                valor = round(valor, 2)
-            datos_dict[time_str][record.get_measurement()] = valor
+   for table in result:
+    for record in table.records:
+        time_obj = record.get_time().replace(microsecond=0)
+        time_str = time_obj.isoformat()
+        datos_dict[time_str]["time"] = time_str
+        valor = record.get_value()
+        if isinstance(valor, (int, float)):
+            valor = round(valor, 2)
+        datos_dict[time_str][record.get_measurement()] = valor
 
     datos = []
     for i, data in enumerate(sorted(datos_dict.values(), key=lambda x: x["time"])):
