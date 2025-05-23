@@ -35,7 +35,11 @@ def leer_datos():
         for record in table.records:
             time_str = record.get_time().isoformat()
             datos_dict[time_str]["time"] = time_str
-            datos_dict[time_str][record.get_measurement()] = record.get_value()
+            valor = record.get_value()
+            if isinstance(valor, (int, float)):
+                valor = round(valor, 2)
+            datos_dict[time_str][record.get_measurement()] = valor
 
     datos = list(datos_dict.values())
     return datos
+
